@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Button, Form, message, Steps } from 'antd';
+import { Button, Form, Steps } from 'antd';
 import Form1 from './Form1';
 import Form2 from './Form2';
 import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
+import toast from 'react-hot-toast';
 
 const steps = [
     { id: 1, title: 'First', name: 'step1', content: <Form1 /> },
@@ -32,7 +33,7 @@ const FormWithStepper = () => {
             setCurrent(current + 1);
             // eslint-disable-next-line no-unused-vars
         } catch (err) {
-            message.error('Please complete this step before continuing.');
+            toast.error('Please complete this step before continuing.');
         }
     };
 
@@ -46,7 +47,7 @@ const FormWithStepper = () => {
             return { ...acc, ...stepGroup };
         }, {});
         console.log('✅ Final submitted values:', flatValues);
-        message.success('Form submitted successfully!');
+        toast.success('Form submitted successfully!');
     };
 
     const items = steps.map(item => ({ key: item.title, title: item.title }));
@@ -61,12 +62,14 @@ const FormWithStepper = () => {
                 layout="vertical"
                 className="p-4 space-y-6"
             >
-                {steps.map((step, index) => (
-                    <div key={step.id} style={{ display: current === index ? 'block' : 'none' }}>
-                        {step.content}
-                    </div>
-                ))}
+                <div className='mt-6'>
+                    {steps.map((step, index) => (
+                        <div key={step.id} style={{ display: current === index ? 'block' : 'none' }}>
+                            {step.content}
+                        </div>
+                    ))}
 
+                </div>
                 <div className="mt-6 flex gap-4">
                     {current > 0 && (
                         <Button onClick={prev}>Previous</Button>
