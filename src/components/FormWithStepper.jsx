@@ -99,15 +99,15 @@ const FormWithStepper = () => {
             </Form>
             {
                 formValues && <div className='mt-6'>
-                    <div className='bg-gray-100 p-4 flex gap-4 justify-between'>
+                    <div className='bg-gray-100 p-4 flex gap-4 items-start justify-between'>
                         <pre>
                             <code>
                                 {JSON.stringify(formValues, null, 2)}
                             </code>
                         </pre>
-                        <div>
-                            <IoCopyOutline title='Copy to clipboard' className='text-2xl cursor-pointer' onClick={handleCopyToClipboard} />
-                        </div>
+                        <button onClick={handleCopyToClipboard} title='Copy to clipboard' className='cursor-pointer hover:text-blue-500 transition delay-200 ease-in-out'>
+                            <IoCopyOutline size={24} />
+                        </button>
                     </div>
                 </div>
             }
