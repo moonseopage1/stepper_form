@@ -18,6 +18,7 @@ const steps = [
 const FormWithStepper = () => {
     const [form] = Form.useForm();
     const [current, setCurrent] = useState(0);
+    const [formValues, setFormValues] = useState(null);
 
     const stepNames = ['step1', 'step2', 'step3', 'step4', 'step5'];
 
@@ -46,7 +47,7 @@ const FormWithStepper = () => {
         const flatValues = Object.values(values).reduce((acc, stepGroup) => {
             return { ...acc, ...stepGroup };
         }, {});
-        console.log('✅ Final submitted values:', flatValues);
+        setFormValues(flatValues);
         toast.success('Form submitted successfully!');
 
         // ✅ Reset form fields and step state
@@ -55,6 +56,8 @@ const FormWithStepper = () => {
     };
 
     const items = steps.map(item => ({ key: item.title, title: item.title }));
+
+    console.log('✅ Final submitted values:', formValues);
 
     return (
         <>
@@ -90,6 +93,18 @@ const FormWithStepper = () => {
                     )}
                 </div>
             </Form>
+            {
+                formValues && <div className='mt-6'>
+                    <div className='bg-gray-100 p-4'>
+                        <pre>
+                            <code>
+                                {JSON.stringify(formValues, null, 2)}
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+            }
+
         </>
     );
 };
