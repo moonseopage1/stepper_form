@@ -4,7 +4,7 @@ const Form1 = () => {
     return (
         <div>
             <Form.Item
-                name={['step1', 'fName']}
+                name={['step1', 'firstName']}
                 label={<span className="text-lg">First Name</span>}
                 rules={[
                     {
@@ -22,7 +22,7 @@ const Form1 = () => {
                 />
             </Form.Item>
             <Form.Item
-                name={['step1', 'lName']}
+                name={['step1', 'lastName']}
                 label={<span className="text-lg">Last Name</span>}
                 rules={[
                     {

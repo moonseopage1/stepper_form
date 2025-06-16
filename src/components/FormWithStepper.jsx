@@ -6,6 +6,7 @@ import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
 import toast from 'react-hot-toast';
+import { IoCopyOutline } from "react-icons/io5";
 
 const steps = [
     { id: 1, title: 'First', name: 'step1', content: <Form1 /> },
@@ -57,7 +58,10 @@ const FormWithStepper = () => {
 
     const items = steps.map(item => ({ key: item.title, title: item.title }));
 
-    console.log('✅ Final submitted values:', formValues);
+    const handleCopyToClipboard = () => {
+        navigator.clipboard.writeText(JSON.stringify(formValues, null, 2));
+        toast.success('Copied to clipboard!');
+    };
 
     return (
         <>
@@ -95,12 +99,15 @@ const FormWithStepper = () => {
             </Form>
             {
                 formValues && <div className='mt-6'>
-                    <div className='bg-gray-100 p-4'>
+                    <div className='bg-gray-100 p-4 flex gap-4 justify-between'>
                         <pre>
                             <code>
                                 {JSON.stringify(formValues, null, 2)}
                             </code>
                         </pre>
+                        <div>
+                            <IoCopyOutline title='Copy to clipboard' className='text-2xl cursor-pointer' onClick={handleCopyToClipboard} />
+                        </div>
                     </div>
                 </div>
             }
