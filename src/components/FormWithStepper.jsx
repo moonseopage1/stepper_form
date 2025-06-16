@@ -48,6 +48,10 @@ const FormWithStepper = () => {
         }, {});
         console.log('✅ Final submitted values:', flatValues);
         toast.success('Form submitted successfully!');
+
+        // ✅ Reset form fields and step state
+        form.resetFields();
+        setCurrent(0);
     };
 
     const items = steps.map(item => ({ key: item.title, title: item.title }));

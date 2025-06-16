@@ -15,6 +15,7 @@ const Form5 = () => {
                 ]}
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
+                hasFeedback
             >
                 <Input.Password
                     size="large"
