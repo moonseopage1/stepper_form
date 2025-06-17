@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd';
+import QuillFormItem from './QuilFromItem';
 
 const Form1 = () => {
     return (
@@ -39,6 +40,12 @@ const Form1 = () => {
                     className=""
                 />
             </Form.Item>
+            {/* About  */}
+            <QuillFormItem
+                name={["step1", "about"]}
+                label="About yourself"
+                requiredMessage="Please write about yourself"
+            />
         </div>
     );
 };

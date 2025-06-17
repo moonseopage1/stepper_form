@@ -1,5 +1,6 @@
 import { Form, Input } from 'antd';
 import React from 'react';
+import QuillFormItem from './QuilFromItem';
 
 const Form2 = () => {
     return (
@@ -43,6 +44,12 @@ const Form2 = () => {
                     placeholder="Enter your username"
                 />
             </Form.Item>
+            {/* Description  */}
+            <QuillFormItem
+                name={["step2", "description"]}
+                label="Description"
+                requiredMessage="Please write a description"
+            />
         </div>
     );
 };
