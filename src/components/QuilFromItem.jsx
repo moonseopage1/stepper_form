@@ -18,27 +18,37 @@ const QuillFormItem = ({
 }) => {
     return (
         <Form.Item
-            name={name}
-            label={<span className="text-lg">{label}</span>}
-            valuePropName="value"
-            rules={[
-                {
-                    required: true,
-                    validator: (_, value) =>
-                        isQuillEmpty(value)
-                            ? Promise.reject(new Error(requiredMessage))
-                            : Promise.resolve(),
-                },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
+            shouldUpdate={(prev, next) => prev[name] !== next[name]}
+            noStyle
         >
-            <ReactQuill
-                theme="snow"
-                placeholder={`Write your ${label?.toLowerCase()}`}
-                {...rest}
-            />
+            {({ getFieldValue, setFieldsValue }) => (
+                <Form.Item
+                    name={name}
+                    label={<span className="text-lg">{label}</span>}
+                    valuePropName="value"
+                    trigger="onChange"
+                    rules={[
+                        {
+                            validator: (_, value) =>
+                                isQuillEmpty(value)
+                                    ? Promise.reject(new Error(requiredMessage))
+                                    : Promise.resolve(),
+                        },
+                    ]}
+                >
+                    <ReactQuill
+                        theme="snow"
+                        value={getFieldValue(name)}
+                        onChange={(value) => {
+                            setFieldsValue({ [name]: value });
+                        }}
+                        placeholder={`Write your ${label?.toLowerCase()}`}
+                        {...rest}
+                    />
+                </Form.Item>
+            )}
         </Form.Item>
+
         // <Form.Item
         //     name={name}
         //     label={<span className="text-lg">{label}</span>}
