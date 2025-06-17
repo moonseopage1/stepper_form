@@ -33,8 +33,9 @@ const FormWithStepper = () => {
 
             await form.validateFields(currentStepFieldNames);
             setCurrent(current + 1);
-            // eslint-disable-next-line no-unused-vars
+
         } catch (err) {
+            console.log("err", err);
             toast.error('Please complete this step before continuing.');
         }
     };
