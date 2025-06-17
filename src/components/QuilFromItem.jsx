@@ -39,7 +39,9 @@ const QuillFormItem = ({
                     trigger="onChange"
                     validateTrigger="onChange"
                     rules={[
+
                         {
+                            required: requiredMessage ? true : false,
                             validator: (_, value) =>
                                 isQuillEmpty(value)
                                     ? Promise.reject(new Error(requiredMessage))
