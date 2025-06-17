@@ -17,42 +17,28 @@ const QuillFormItem = ({
 }) => {
     return (
         <Form.Item
-            shouldUpdate={(prevValues, currentValues) =>
-                prevValues[name] !== currentValues[name]
-            }
-            noStyle
+            name={name}
+            label={<span className="text-lg">{label}</span>}
+            valuePropName="value"
+            getValueFromEvent={(content) => content} // required for ReactQuill to update Form
+            rules={[
+                {
+                    required: requiredMessage ? true : false,
+                    validator: (_, value) =>
+                        isQuillEmpty(value)
+                            ? Promise.reject(new Error(requiredMessage))
+                            : Promise.resolve(),
+                },
+            ]}
+            validateTrigger="onChange"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
         >
-            {({ setFieldsValue, getFieldValue }) => (
-                <Form.Item
-                    name={name}
-                    label={<span className="text-lg">{label}</span>}
-                    valuePropName="value"
-                    trigger="onChange"
-                    validateTrigger="onChange"
-                    rules={[
-                        {
-                            required: requiredMessage ? true : false,
-                            validator: (_, value) =>
-                                isQuillEmpty(value)
-                                    ? Promise.reject(new Error(requiredMessage))
-                                    : Promise.resolve(),
-                        },
-                    ]}
-                    labelCol={{ span: 24 }}
-                    wrapperCol={{ span: 24 }}
-                >
-                    <ReactQuill
-                        theme="snow"
-                        value={getFieldValue(name) || ""}
-                        onChange={(value) => {
-                            // Update AntD form manually
-                            setFieldsValue({ [name]: value });
-                        }}
-                        placeholder={`Write your ${label?.toLowerCase()}`}
-                        {...rest}
-                    />
-                </Form.Item>
-            )}
+            <ReactQuill
+                theme="snow"
+                placeholder={`Write your ${label?.toLowerCase()}`}
+                {...rest}
+            />
         </Form.Item>
     );
 };
