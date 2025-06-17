@@ -12,7 +12,7 @@ const isQuillEmpty = (html) => {
 const QuillFormItem = ({
     name,
     label,
-    requiredMessage = "This field is required",
+    requiredMessage,
     ...rest
 }) => {
     return (
@@ -31,6 +31,7 @@ const QuillFormItem = ({
                     validateTrigger="onChange"
                     rules={[
                         {
+                            required: requiredMessage ? true : false,
                             validator: (_, value) =>
                                 isQuillEmpty(value)
                                     ? Promise.reject(new Error(requiredMessage))
