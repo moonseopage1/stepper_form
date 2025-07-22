@@ -1,28 +1,62 @@
+import { useEffect, useState } from "react";
 import { Avatar, Badge } from "antd";
 
-// ✅ receives: onOpenChat, openChats, onCloseChat
-const ChatList = ({ onOpenChat, openChats, onCloseChat }) => {
-    const conversations = [
-        { id: 1, name: "User 1", lastMessage: "Good morning" },
-        { id: 2, name: "User 2", lastMessage: "Hello" },
-        { id: 3, name: "User 3", lastMessage: "Helloooooooo" },
-        { id: 4, name: "User 4", lastMessage: "heyyyyyyyyy" },
-    ];
+const dummyConversations = [
+    {
+        proposal_id: 3,
+        startup_name: "Startup idea two",
+        other_user: {
+            id: 6,
+            name: "Mr Investor",
+            email: "investor@gmail.com",
+            profile_picture_url:
+                "https://seedstackerapi.dotprogrammers.com/storage/profile_pictures/l9pLWjR7dwEper3FEfU7rcd4zCZTWgki82H4yCXq.png",
+        },
+    },
+    {
+        proposal_id: 5,
+        startup_name: "Startup idea 3",
+        other_user: {
+            id: 9,
+            name: "Mr Investor 2",
+            email: "investor2@gmail.com",
+            profile_picture_url: null,
+        },
+    },
+    {
+        proposal_id: 6,
+        startup_name: "Hello Startup",
+        other_user: {
+            id: 6,
+            name: "Mr Investor",
+            email: "investor@gmail.com",
+            profile_picture_url:
+                "https://seedstackerapi.dotprogrammers.com/storage/profile_pictures/l9pLWjR7dwEper3FEfU7rcd4zCZTWgki82H4yCXq.png",
+        },
+    },
+];
 
-    const isOpen = (id) => openChats.some((c) => c.id === id);
+const ChatList = ({ onOpenChat, openChats, onCloseChat }) => {
+    const [conversations, setConversations] = useState([]);
+
+    const isOpen = (id) => openChats.some((c) => c.proposal_id === id);
+
+    useEffect(() => {
+        setConversations(dummyConversations);
+    }, []);
 
     return (
         <div className="bg-white p-2 flex flex-col gap-2 fixed bottom-4 right-4 z-50 shadow rounded">
             {conversations.map((c) => (
-                <div key={c.id} className="relative group">
+                <div key={c.proposal_id} className="relative group">
                     <Badge
                         count={
-                            isOpen(c.id) ? (
+                            isOpen(c.proposal_id) ? (
                                 <span
                                     className="text-xs text-red-500 cursor-pointer"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        onCloseChat(c.id);
+                                        onCloseChat(c.proposal_id);
                                     }}
                                 >
                                     ✖
@@ -35,11 +69,10 @@ const ChatList = ({ onOpenChat, openChats, onCloseChat }) => {
                             onClick={() => onOpenChat(c)}
                             size={56}
                             shape="circle"
-                            src="https://avatars.githubusercontent.com/u/158009316?v=4"
-                            className={`cursor-pointer ${isOpen(c.id) ? "ring-2 ring-green-400" : ""
-                                }`}
+                            src={c.other_user?.profile_picture_url}
+                            className={`cursor-pointer ${isOpen(c.proposal_id) ? "ring-2 ring-green-400" : ""}`}
                         >
-                            {c.name}
+                            {c.other_user?.name?.[0]}
                         </Avatar>
                     </Badge>
                 </div>
